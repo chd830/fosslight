@@ -788,11 +788,18 @@
                 // 페이징 UI 설정
                 hidePageNav('_licenseChoicePager');
 
-                var ids = $("#_licenseChoice").jqGrid("getDataIDs");
-                var newId = ids.length ? Number(ids[ids.length-1])+1 : 1;
-                var row = {no	:newId, ossLicenseIdx	:newId};
-                $("#_licenseChoice").jqGrid("addRowData", newId , row, "last");
-                $("#_licenseChoice").jqGrid("setSelection", newId);
+                console.dir($('#_licenseChoice > tbody tr').length);
+
+                // 생성된 grid가 있는지 확인하기
+                if($('#_licenseChoice > tbody tr').length == 1) {
+                    var ids = $("#_licenseChoice").jqGrid("getDataIDs");
+                    var newId = ids.length ? Number(ids[ids.length-1])+1 : 1;
+                    var row = {no	:newId, ossLicenseIdx	:newId};
+                    $("#_licenseChoice").jqGrid("addRowData", newId , row, "last");
+                    $("#_licenseChoice").jqGrid("setSelection", newId);
+                }
+
+                console.dir($('#_licenseChoice > tbody tr').length);
 
                 // 첫 로우 ossLicenseComb 설정
                 setFristComb();
@@ -816,6 +823,8 @@
         });
         _licenseChoice.jqGrid('navGrid',"#_licenseChoicePager",{edit:false,add:true,del:false,search:false,refresh:false
             , addfunc: function (rowid) {
+                console.dir($('#_licenseChoice > tbody tr').length);
+
                 var ids = $("#_licenseChoice").jqGrid("getDataIDs");
                 var newId = ids.length ? Number(ids[ids.length-1])+1 : 1;
                 var row = {no	:newId, ossLicenseIdx	:newId};
@@ -950,6 +959,8 @@
                 height: 'auto',
                 caption : 'Please select the open source you want to set as nickname.',
                 loadComplete: function(id){
+                    console.dir($('#_licenseChoice > tbody tr').length);
+
                     var ids = $('#_ossSelectList').jqGrid('getDataIDs');
                     $.each(ids,function(idx,rowId){
                         var rowData = $('#_ossSelectList').jqGrid("getRowData",rowId);
